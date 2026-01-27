@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LinkShorty</title>
+  <link rel="stylesheet" href="/style.css">
+  <link rel="icon" type="image/svg+xml" href="/logo.svg">
+</head>
+<body>
+  <nav>
+    <a href="/" class="logo">
+      <img src="/logo.svg" alt="LinkShorty" style="height: 45px; vertical-align: middle;">
+    </a>
+    
+    <div class="nav-links">
+      <% if (locals.user) { %>
+        <span style="color:#555; margin-right:15px; font-size:0.9rem;">
+          Hi, <b style="color:var(--primary)"><%= locals.username %></b>
+          <% if (locals.role === 'admin') { %><span class="admin-badge">ADMIN</span><% } %>
+        </span>
+        <% if (locals.role === 'admin') { %> <a href="/admin" style="color:var(--danger)">Admin Panel</a> <% } %>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/logout">Logout</a>
+      <% } else { %>
+        <a href="/login">Login</a>
+        <a href="/register">Register</a>
+      <% } %>
+    </div>
+  </nav>

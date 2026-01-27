@@ -1,0 +1,52 @@
+<%- include('partials/header') %>
+  
+  <div class="container container-small">
+    <h2>Shorten Your Link</h2>
+    <p style="margin-bottom: 15px;">Paste your URL below.</p>
+    
+    <% if (locals.error) { %> <div style="color:#ff6b6b; margin-bottom:15px;"><%= error %></div> <% } %>
+
+    <form action="/shorten" method="POST">
+      <input type="url" name="longUrl" placeholder="Paste URL here..." required>
+      <input type="text" name="customCode" placeholder="Custom Alias (Optional)">
+      <button type="submit">Shorten Now</button>
+    </form>
+
+    <% if (locals.shortUrl) { %>
+      <div class="success-box">
+        <p style="color:#fff; margin-bottom:5px;"><b>Success! Link Created:</b></p>
+        <a href="<%= shortUrl %>" target="_blank" style="color:var(--primary); font-size:1.1rem; word-break:break-all;"><%= shortUrl %></a><br><br>
+        <img src="<%= qrCode %>" width="100" style="border-radius:4px;">
+      </div>
+    <% } %>
+  </div>
+
+  <div class="section-title">Your Shortened Links</div>
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 25%;">Short Link</th>
+          <th style="width: 40%;">Original URL</th>
+          <th class="col-center" style="width: 10%;">Clicks</th>
+          <th class="col-center" style="width: 10%;">QR</th>
+          <th class="col-center" style="width: 15%;">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if(urls.length === 0) { %> <tr><td colspan="5" class="col-center" style="padding:30px; color:#666;">No links created yet.</td></tr> <% } %>
+        <% urls.forEach(url => { %>
+          <tr>
+            <td class="col-short"><a href="<%= baseUrl %>/<%= url.shortCode %>" target="_blank"><%= baseUrl %>/<%= url.shortCode %></a></td>
+            <td class="col-target"><%= url.longUrl %></td>
+            <td class="col-center"><%= url.clicks %></td>
+            <td class="col-center"><img src="<%= url.qrCode %>" class="qr-mini" onclick="openQR(this.src)"></td>
+            <td class="col-center">
+              <a href="/delete/<%= url._id %>" class="btn-delete" onclick="return confirm('Delete this link?')">Delete</a>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+  <%- include('partials/footer') %>

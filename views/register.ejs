@@ -1,0 +1,13 @@
+<%- include('partials/header') %>
+  <div class="container">
+    <h1>Create Account</h1>
+    <% if (error) { %> <div style="color:#ff6b6b; margin-bottom:10px;"><%= error %></div> <% } %>
+    <form action="/register" method="POST">
+      <input type="text" name="username" placeholder="Username" required>
+      <input type="password" name="password" placeholder="Password" required>
+      <input type="password" name="adminSecret" placeholder="Admin Key (Optional)">
+      <button type="submit">Sign Up</button>
+    </form>
+    <p style="margin-top:15px;">Joined? <a href="/login" style="color:var(--primary)">Login</a></p>
+  </div>
+  <%- include('partials/footer') %>

@@ -1,0 +1,19 @@
+<%- include('partials/header') %>
+  <div class="container">
+    <h1>Shorten Your Link</h1>
+    <p>Paste long URL to get short link & QR.</p>
+    <% if (locals.error) { %> <div style="color:#ff6b6b; margin-bottom:15px;"><%= error %></div> <% } %>
+    <form action="/shorten" method="POST">
+      <input type="url" name="longUrl" placeholder="Paste URL here..." required>
+      <input type="text" name="customCode" placeholder="Alias (Optional)">
+      <button type="submit">Shorten Now</button>
+    </form>
+    <% if (locals.shortUrl) { %>
+      <div style="margin-top:20px; padding:15px; background:rgba(0,0,0,0.3); border-radius:8px;">
+        <p style="color:#fff; margin-bottom:5px;">Success! Your Link:</p>
+        <a href="<%= shortUrl %>" target="_blank" style="color:var(--primary); font-size:1.1rem;"><%= shortUrl %></a><br><br>
+        <img src="<%= qrCode %>" width="120" style="border-radius:8px;">
+      </div>
+    <% } %>
+  </div>
+  <%- include('partials/footer') %>

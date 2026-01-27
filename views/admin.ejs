@@ -1,0 +1,52 @@
+<%- include('partials/header') %>
+  
+  <div class="section-title">All Shortened Links</div>
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 20%;">Short Link</th>
+          <th style="width: 35%;">Target URL</th>
+          <th style="width: 15%;">Owner</th>
+          <th style="width: 10%;" class="col-center">Clicks</th>
+          <th style="width: 10%;" class="col-center">QR</th>
+          <th style="width: 10%;" class="col-center">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% urls.forEach(url => { %>
+          <tr>
+            <td class="col-short"><a href="<%= baseUrl %>/<%= url.shortCode %>" target="_blank"><%= baseUrl %>/<%= url.shortCode %></a></td>
+            <td class="col-target"><%= url.longUrl %></td>
+            <td class="col-owner"><%= url.user ? url.user.username : 'Guest' %></td>
+            <td class="col-center"><%= url.clicks %></td>
+            <td class="col-center"><img src="<%= url.qrCode %>" class="qr-mini" onclick="openQR(this.src)"></td>
+            <td class="col-center"><a href="/admin/delete/url/<%= url._id %>" class="btn-delete" onclick="return confirm('Delete this link?')">Delete</a></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section-title">Registered Users</div>
+  <div class="table-wrapper">
+    <table>
+      <thead><tr><th>Username</th><th>Role</th><th class="col-center">Action</th></tr></thead>
+      <tbody>
+        <% users.forEach(u => { %>
+          <tr>
+            <td style="color:white;"><%= u.username %></td>
+            <td style="color:#aaa;"><%= u.role %></td>
+            <td class="col-center">
+              <% if(u.role !== 'admin') { %>
+                <a href="/admin/delete/user/<%= u._id %>" class="btn-delete">Remove User</a>
+              <% } else { %>
+                <span style="color:#555;">Super Admin</span>
+              <% } %>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+  <%- include('partials/footer') %>
