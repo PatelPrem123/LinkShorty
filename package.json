@@ -4,7 +4,7 @@
   "description": "Premium URL Shortener (Dark Glassmorphism)",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
     "build": "echo \"Skipping backend build\""
   },
   "dependencies": {
